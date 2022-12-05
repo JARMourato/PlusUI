@@ -1,6 +1,4 @@
-import XCTest
 @testable import PlusUI
+import XCTest
 
-final class PlusUITests: XCTestCase {
-    
-}
+final class PlusUITests: XCTestCase {}

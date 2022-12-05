@@ -1,12 +1,12 @@
 # PlusUI
 
 [![Build Status][build status badge]][build status]
-[![codebeat badge][codebeat status badge]][codebeat status]
-[![codeclimate badge][codeclimate status badge]][codeclimate status]
-[![codecov][codecov status badge]][codecov status]
-![Platforms][platforms badge]
+<!--[![codebeat badge][codebeat status badge]][codebeat status]-->
+<!--[![codeclimate badge][codeclimate status badge]][codeclimate status]-->
+<!--[![codecov][codecov status badge]][codecov status]-->
+<!--![Platforms][platforms badge]-->
 
-## Why would I use this?
+<!--## Why would I use this?-->
 
 
 ## Installation
@@ -23,7 +23,7 @@ If working in an Xcode project select `File->Add Packages...` and search for the
 
 `https://github.com/JARMourato/PlusUI.git`
 
-## Usage
+<!--## Usage-->
 
 ## Contributions
 
@@ -39,10 +39,10 @@ João ([@_JARMourato](https://twitter.com/_JARMourato))
 
 [build status]: https://github.com/JARMourato/PlusUI/actions?query=workflow%3ACI
 [build status badge]: https://github.com/JARMourato/PlusUI/workflows/CI/badge.svg
-[codebeat status]: https://codebeat.co/projects/github-com-jarmourato-PlusUI-main
-[codebeat status badge]: 
-[codeclimate status]: https://codeclimate.com/github/JARMourato/PlusUI/maintainability
-[codeclimate status badge]: 
-[codecov status]: https://codecov.io/gh/JARMourato/PlusUI
-[codecov status badge]: 
+<!--[codebeat status]: https://codebeat.co/projects/github-com-jarmourato-PlusUI-main-->
+<!--[codebeat status badge]: -->
+<!--[codeclimate status]: https://codeclimate.com/github/JARMourato/PlusUI/maintainability-->
+<!--[codeclimate status badge]: -->
+<!--[codecov status]: https://codecov.io/gh/JARMourato/PlusUI-->
+<!--[codecov status badge]: -->
 [platforms badge]: https://img.shields.io/static/v1?label=Platforms&message=iOS%20|%20macOS%20|%20tvOS%20|%20watchOS%20&color=brightgreen
