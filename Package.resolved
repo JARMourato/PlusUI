@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "extensions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JARMourato/Extensions",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a50dc9fbd12e1ae1db4890c0c3647f398a4941dc"
+      }
+    }
+  ],
+  "version" : 2
+}

@@ -9,9 +9,11 @@ let package = Package(
     products: [
         .library(name: "PlusUI", targets: ["PlusUI"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/JARMourato/Extensions", branch: "main"),
+    ],
     targets: [
-        .target(name: "PlusUI", dependencies: [], path: "Sources"),
+        .target(name: "PlusUI", dependencies: ["Extensions"], path: "Sources"),
         .testTarget(name: "PlusUITests", dependencies: ["PlusUI"], path: "Tests"),
     ]
 )
