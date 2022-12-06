@@ -30,12 +30,13 @@ public struct FluidGradient: View {
 }
 
 #if os(OSX)
-typealias SystemRepresentable = NSViewRepresentable
+    typealias SystemRepresentable = NSViewRepresentable
 #else
-typealias SystemRepresentable = UIViewRepresentable
+    typealias SystemRepresentable = UIViewRepresentable
 #endif
 
 // MARK: - Representable
+
 extension FluidGradient {
     struct Representable: SystemRepresentable {
         var blobs: [Color]
@@ -48,28 +49,30 @@ extension FluidGradient {
             context.coordinator.view
         }
 
-        func updateView(_ view: FluidGradientView, context: Context) {
+        func updateView(_: FluidGradientView, context: Context) {
             context.coordinator.create(blobs: blobs, highlights: highlights)
             DispatchQueue.main.async {
                 context.coordinator.update(speed: speed)
             }
         }
 
-#if os(OSX)
-        func makeNSView(context: Context) -> FluidGradientView {
-            makeView(context: context)
-        }
-        func updateNSView(_ view: FluidGradientView, context: Context) {
-            updateView(view, context: context)
-        }
-#else
-        func makeUIView(context: Context) -> FluidGradientView {
-            makeView(context: context)
-        }
-        func updateUIView(_ view: FluidGradientView, context: Context) {
-            updateView(view, context: context)
-        }
-#endif
+        #if os(OSX)
+            func makeNSView(context: Context) -> FluidGradientView {
+                makeView(context: context)
+            }
+
+            func updateNSView(_ view: FluidGradientView, context: Context) {
+                updateView(view, context: context)
+            }
+        #else
+            func makeUIView(context: Context) -> FluidGradientView {
+                makeView(context: context)
+            }
+
+            func updateUIView(_ view: FluidGradientView, context: Context) {
+                updateView(view, context: context)
+            }
+        #endif
 
         func makeCoordinator() -> Coordinator {
             Coordinator(blobs: blobs, highlights: highlights, speed: speed, blurValue: $blurValue)
@@ -88,8 +91,8 @@ extension FluidGradient {
             self.blurValue = blurValue
             self.highlights = highlights
             self.speed = speed
-            self.view = FluidGradientView(blobs: blobs, highlights: highlights, speed: speed)
-            self.view.delegate = self
+            view = FluidGradientView(blobs: blobs, highlights: highlights, speed: speed)
+            view.delegate = self
         }
 
         func create(blobs: [Color], highlights: [Color]) {

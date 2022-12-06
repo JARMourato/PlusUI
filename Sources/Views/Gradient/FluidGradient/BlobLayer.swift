@@ -7,9 +7,9 @@ class BlobLayer: CAGradientLayer {
     init(color: Color) {
         super.init()
         type = .radial
-#if os(OSX)
-        autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
-#endif
+        #if os(OSX)
+            autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
+        #endif
         set(color: color)
         let position = newPosition() // Center point
         startPoint = position
@@ -18,27 +18,27 @@ class BlobLayer: CAGradientLayer {
     }
 
     func newPosition() -> CGPoint {
-        CGPoint(x: CGFloat.random(in: 0.0...1.0), y: CGFloat.random(in: 0.0...1.0)).capped()
+        CGPoint(x: CGFloat.random(in: 0.0 ... 1.0), y: CGFloat.random(in: 0.0 ... 1.0)).capped()
     }
 
     func newRadius() -> CGPoint {
-        let size = CGFloat.random(in: 0.15...0.75)
-        let viewRatio = frame.width/frame.height
+        let size = CGFloat.random(in: 0.15 ... 0.75)
+        let viewRatio = frame.width / frame.height
         let safeRatio = max(viewRatio.isNaN ? 1 : viewRatio, 1)
-        let ratio = safeRatio*CGFloat.random(in: 0.25...1.75)
-        return CGPoint(x: size, y: size*ratio)
+        let ratio = safeRatio * CGFloat.random(in: 0.25 ... 1.75)
+        return CGPoint(x: size, y: size * ratio)
     }
 
     func animate(speed: CGFloat) {
         guard speed > 0 else { return }
 
-        self.removeAllAnimations()
+        removeAllAnimations()
         let currentLayer = presentation() ?? self
 
         let animation = CASpringAnimation()
-        animation.mass = 10/speed
+        animation.mass = 10 / speed
         animation.damping = 50
-        animation.duration = 1/speed
+        animation.duration = 1 / speed
 
         animation.isRemovedOnCompletion = false
         animation.fillMode = CAMediaTimingFillMode.forwards
@@ -62,7 +62,7 @@ class BlobLayer: CAGradientLayer {
         endPoint = position.displace(by: radius)
 
         // Opacity
-        let value = Float.random(in: 0.5...1)
+        let value = Float.random(in: 0.5 ... 1)
         let opacity = animation.copy() as! CASpringAnimation
         opacity.fromValue = self.opacity
         opacity.toValue = value
@@ -80,11 +80,12 @@ class BlobLayer: CAGradientLayer {
         locations = [0.0, 0.9, 1.0]
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override init(layer: Any) {
+    override public init(layer: Any) {
         super.init(layer: layer)
     }
 }

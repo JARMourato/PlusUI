@@ -17,25 +17,26 @@ class FluidGradientView: SystemView {
         if let compositingFilter = CIFilter(name: "CIOverlayBlendMode") {
             highlightLayer.compositingFilter = compositingFilter
         }
-#if os(OSX)
-        layer = ResizableLayer()
-        wantsLayer = true
-        postsFrameChangedNotifications = true
-        layer?.delegate = self
-        baseLayer.delegate = self
-        highlightLayer.delegate = self
-        layer?.addSublayer(baseLayer)
-        layer?.addSublayer(highlightLayer)
-#else
-        layer.addSublayer(baseLayer)
-        layer.addSublayer(highlightLayer)
-#endif
+        #if os(OSX)
+            layer = ResizableLayer()
+            wantsLayer = true
+            postsFrameChangedNotifications = true
+            layer?.delegate = self
+            baseLayer.delegate = self
+            highlightLayer.delegate = self
+            layer?.addSublayer(baseLayer)
+            layer?.addSublayer(highlightLayer)
+        #else
+            layer.addSublayer(baseLayer)
+            layer.addSublayer(highlightLayer)
+        #endif
         create(blobs, layer: baseLayer)
         create(highlights, layer: highlightLayer)
         DispatchQueue.main.async { self.update(speed: speed) }
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -63,13 +64,13 @@ class FluidGradientView: SystemView {
         let layers = (baseLayer.sublayers ?? []) + (highlightLayer.sublayers ?? [])
         for layer in layers {
             if let layer = layer as? BlobLayer {
-                Timer.publish(every: .random(in: 0.8/speed...1.2/speed), on: .main, in: .common)
+                Timer.publish(every: .random(in: 0.8 / speed ... 1.2 / speed), on: .main, in: .common)
                     .autoconnect()
                     .sink { _ in
-#if os(OSX)
-                        let visible = self.window?.occlusionState.contains(.visible)
-                        guard visible == true else { return }
-#endif
+                        #if os(OSX)
+                            let visible = self.window?.occlusionState.contains(.visible)
+                            guard visible == true else { return }
+                        #endif
                         layer.animate(speed: speed)
                     }
                     .store(in: &cancellables)
@@ -81,27 +82,27 @@ class FluidGradientView: SystemView {
         delegate?.updateBlur(min(frame.width, frame.height))
     }
 
-#if os(OSX)
-    public override func viewDidMoveToWindow() {
-        super.viewDidMoveToWindow()
-        let scale = window?.backingScaleFactor ?? 2
-        layer?.contentsScale = scale
-        baseLayer.contentsScale = scale
-        highlightLayer.contentsScale = scale
-        updateBlur()
-    }
+    #if os(OSX)
+        override public func viewDidMoveToWindow() {
+            super.viewDidMoveToWindow()
+            let scale = window?.backingScaleFactor ?? 2
+            layer?.contentsScale = scale
+            baseLayer.contentsScale = scale
+            highlightLayer.contentsScale = scale
+            updateBlur()
+        }
 
-    public override func resize(withOldSuperviewSize oldSize: NSSize) {
-        updateBlur()
-    }
-#else
-    public override func layoutSubviews() {
-        layer.frame = self.bounds
-        baseLayer.frame = self.bounds
-        highlightLayer.frame = self.bounds
-        updateBlur()
-    }
-#endif
+        override public func resize(withOldSuperviewSize _: NSSize) {
+            updateBlur()
+        }
+    #else
+        override public func layoutSubviews() {
+            layer.frame = bounds
+            baseLayer.frame = bounds
+            highlightLayer.frame = bounds
+            updateBlur()
+        }
+    #endif
 }
 
 protocol FluidGradientDelegate: AnyObject {
@@ -109,9 +110,9 @@ protocol FluidGradientDelegate: AnyObject {
 }
 
 #if os(OSX)
-extension FluidGradientView: CALayerDelegate, NSViewLayerContentScaleDelegate {
-    public func layer(_ layer: CALayer, shouldInheritContentsScale newScale: CGFloat, from window: NSWindow) -> Bool {
-        return true
+    extension FluidGradientView: CALayerDelegate, NSViewLayerContentScaleDelegate {
+        public func layer(_: CALayer, shouldInheritContentsScale _: CGFloat, from _: NSWindow) -> Bool {
+            true
+        }
     }
-}
 #endif
