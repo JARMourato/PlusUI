@@ -6,6 +6,11 @@ public struct AlertErrorData : Identifiable {
     public var id: String { error.localizedDescription }
     public let error: Error
     public let title: String
+    
+    public init(error: Error, title: String) {
+        self.error = error
+        self.title = title
+    }
 }
 
 public struct AlertModifier: ViewModifier {
