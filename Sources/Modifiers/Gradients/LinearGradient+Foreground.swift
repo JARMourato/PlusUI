@@ -2,9 +2,8 @@
 
 import SwiftUI
 
-extension View {
-    
-    public func foregroundLinearGradient(colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint) -> some View {
+public extension View {
+    func foregroundLinearGradient(colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint) -> some View {
         overlay {
             LinearGradient(
                 colors: colors,
