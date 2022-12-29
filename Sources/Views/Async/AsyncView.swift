@@ -8,9 +8,9 @@ public struct AsyncView<Value, Content: View, Failure: View, Progress: View>: Vi
     private let failure: (_ error: Error) -> Failure
     private let options: Set<AsyncViewOption>
     private let progress: () -> Progress
-    
+
     @StateObject private var model: ViewModel<Value>
-        
+
     public init(
         asyncWork: @escaping () async throws -> Value,
         options: Set<AsyncViewOption> = Set<AsyncViewOption>(AsyncViewOption.allCases),
@@ -24,8 +24,9 @@ public struct AsyncView<Value, Content: View, Failure: View, Progress: View>: Vi
         self.progress = progress
         _model = StateObject(wrappedValue: ViewModel(asyncWork))
     }
+
     // MARK: Main view
-    
+
     public var body: some View {
         AsyncModelView(
             viewModel: model,
@@ -43,9 +44,9 @@ public struct AsyncModelView<Value, Content: View, Failure: View, Progress: View
     private let failure: (_ error: Error) -> Failure
     private let options: Set<AsyncViewOption>
     private let progress: () -> Progress
-    
+
     @ObservedObject private var model: ViewModel<Value>
-    
+
     public init(
         viewModel: ViewModel<Value>,
         options: Set<AsyncViewOption> = Set<AsyncViewOption>(AsyncViewOption.allCases),
@@ -61,7 +62,7 @@ public struct AsyncModelView<Value, Content: View, Failure: View, Progress: View
     }
 
     // MARK: Main view
-    
+
     public var body: some View {
         refreshableView.task(model.loadIfNeeded)
     }

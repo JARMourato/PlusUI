@@ -19,8 +19,8 @@ struct TextFieldClearButton: ViewModifier {
     }
 }
 
-extension TextField {
-    public func showClearButton(_ text: Binding<String>) -> some View {
-        self.modifier(TextFieldClearButton(text: text))
+public extension TextField {
+    func showClearButton(_ text: Binding<String>) -> some View {
+        modifier(TextFieldClearButton(text: text))
     }
 }

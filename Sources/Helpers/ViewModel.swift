@@ -4,16 +4,15 @@ import Foundation
 
 @MainActor
 public final class ViewModel<Value>: ObservableObject {
-    
     /// Represents the state of the viewModel
     @frozen public enum State<Value> {
         case failure(Error), loaded(Value), noData
     }
-    
+
     private var asyncWork: () async throws -> Value
     private var isLoading: Bool = false
     @Published private(set) var result = State<Value>.noData
-    
+
     public init(_ work: @escaping () async throws -> Value) {
         asyncWork = work
     }
@@ -27,7 +26,7 @@ public final class ViewModel<Value>: ObservableObject {
         guard !isLoading else { return }
         isLoading = true
         defer { isLoading = false }
-        
+
         do {
             result = .loaded(try await runAsyncWork())
         } catch {
